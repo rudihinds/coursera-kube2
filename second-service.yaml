@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: second-service
+spec:
+  selector: #selects pods with following label
+    app: second-app
+  ports:
+  - port: 80 #port the service will listen on
+    targetPort: 80 #port it will target on pod (port we opened as containerPort)

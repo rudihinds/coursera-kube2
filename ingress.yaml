@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-apps
+  annotations: #
+  # use the shared ingress-nginx
+    kubernetes.io/ingress.class: "nginx"
+  labels:
+    name: ingress-apps
+spec:
+  rules:
+      #optional. if no host supplied rules will apply for traffic 
+      #to IP If a host is provided (for example, foo.bar.com), 
+      #the rules apply to that host.
+      #NEEDS TO BE RESOLVED LATER
+    - host: myhost 
+      http:
+        paths: #list of paths, each needs backend.service.name + backend.service.port.number/port.name
+          - pathType: Prefix
+            path: "/anything" #app specified routes
+            backend:
+              service:
+                name: first-service #check name
+                port:
+                  number: 80
+          - pathType: Prefix
+            path: "/uuid" #app specified routes
+            backend:
+              service:
+                name: second-service #check name
+                port:
+                  number: 80

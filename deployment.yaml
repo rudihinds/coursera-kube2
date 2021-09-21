@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: first-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels: #DEPLOYMENT operates on PODS that have these labels
+      app: first-app
+  template:
+    metadata:
+      labels:
+        app: first-app #Gives all these pods this label
+    spec:
+      containers:
+      - name: httpbin
+        image: kennethreitz/httpbin
+        ports:
+        - containerPort: 80
+        env:
+          - name: GUNICORN_CMD_ARGS #we can set GUNICORN config by putting command line args in an envar called GUNICORN_CMD_ARGS
+            value: "--capture-output --error-logfile -
+            --access-logfile - --access-logformat '%(h)s %(t)s
+            %(r)s %(s)s Host: %({Host}i)s}'"
+            # capturing the output and sending error logs to stderr and access logs to stdout
+
+
